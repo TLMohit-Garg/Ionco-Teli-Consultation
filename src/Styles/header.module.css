@@ -1,0 +1,73 @@
+.parentGrid{
+    /* background-color: rgb(179, 179, 199); */
+    width: 100%;
+    padding-top: 12px;
+}
+.logo{
+    width: 85px;
+    height: 85px;
+}
+.stethoscope{
+    width: 25px;
+    height: 30px;
+}
+.imageStack{
+     width: fit-content;
+}
+.logoText{
+     width: 70%;
+     display: flex;
+     justify-content: center;
+     align-items: left;
+     padding-left: 5px;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+.logoTextspan{
+    font-weight: bold;
+    font-size: 22px;
+}
+.innerlogoText{
+    color:#10A0BD;
+    font-size: 22px;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+}
+.IconLabelButtons{
+}
+.headerPhoneSection{
+    /* font-size:102px; */
+}
+.PhoneSectionheader{
+/* height: 50px;
+    width:50px !important; */
+}
+.PhoneIcon{
+    background:#10A0BD;
+    color:white;
+    border-radius:50px;
+    padding:1;
+    /* font-size:12% !important; */
+    /* height: 50px !important; */
+    /* width:70px !important; */
+}
+.phoneTextSection{
+}
+.phoneText{
+    color:#001439;
+    font-size: 22px;
+    font-family: Inter,sans-serif;
+    padding-top: 12px;
+    font-weight: lighter;
+}
+.phoneTextSec{
+    color:#001439;
+    font-size: 22px;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    padding-bottom: 12px;
+}
+.divider{
+    width:100%;
+    padding-top: 12px;
+}
