@@ -69,5 +69,48 @@
 }
 .divider{
     width:100%;
-    padding-top: 12px;
+    padding: 5px;
+}
+.doctorLoginParentsection{
+    border:1px;
+    padding:15px;
+    /* width: 10px; */
+}
+
+.doctorHeader{
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color:#001439;
+    font-size: 16px;
+    font-weight:600;
+    margin: 5px 0px 5px 0px;
+}
+.email{
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color:#8E92A4;
+    font-size: 12px;
+    font-weight:600;
+    margin: 12px 0px 8px 0px;
+}
+.password{
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color:#8E92A4;
+    font-size: 12px;
+    font-weight:600;
+    margin: 12px 0px 5px 0px;
+
+}
+.forgetPassword{
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color:#10A0BD;
+    font-size: 10px;
+    font-weight:400;
+}
+.loginBtn{
+    margin: 35px 0px 5px 0px !important;
+}
+.textField{
+    
+}
+.textFieldParent .inputLabelProp{
+    font-size: 12px;
 }
