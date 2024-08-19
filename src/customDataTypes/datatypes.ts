@@ -1,7 +1,7 @@
 export type ButtonProps ={
     name?: string | any;
     className?:  any;
-    variant: "text" | "outlined" | "contained";
+    variant?: "text" | "outlined" | "contained";
     icon?: React.ReactNode;
     endIcon?: React.ReactNode;
     loading?: boolean;
@@ -10,6 +10,7 @@ export type ButtonProps ={
     onClick?: (params?: any) => void;
     hoverBackgroundColor?: string;
     hoverTextColor?: string;
+    type?: any;
 }
 
 // interface SelectDataOption {
@@ -34,6 +35,7 @@ export type customSelectProps ={
     className?: string;
     selectFieldCss?: any; 
     onChange?: (event: SelectChangeEvent, child?: React.ReactElement) => void;
+    fullWidth?: boolean;
 }
 export interface Address {
     city: string;

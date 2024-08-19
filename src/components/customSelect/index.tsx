@@ -17,13 +17,15 @@ const CustomSelect = ({
   className,
   selectFieldCss,
   onChange,
+  fullWidth,
 }: customSelectProps) => {
   return (
     <Grid>
       <Grid component={form} onSubmit={onSubmit}>
         <FormControl
-          fullWidth={true}
+          fullWidth={fullWidth}
           className={`${styles.formControl} ${selectFieldCss}`}
+          sx={{ width: 225 }}
         >
           <InputLabel id="selectOption-label"></InputLabel>
           <Controller
@@ -33,6 +35,8 @@ const CustomSelect = ({
             render={({ field }) => (
               <Select
                 {...field}
+                id="demo-simple-select-autowidth"
+                autoWidth
                 labelId="selectOption-label"
                 label=""
                 error={error}
@@ -72,4 +76,3 @@ const CustomSelect = ({
 };
 
 export default CustomSelect;
-

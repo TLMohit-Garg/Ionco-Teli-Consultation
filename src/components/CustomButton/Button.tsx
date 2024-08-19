@@ -11,7 +11,8 @@ export default function IconLabelButtons({
   className,
   textcolor,
   buttonWidth,
-  onClick
+  onClick,
+  type
 }: ButtonProps) {
   return (
     <Stack direction="row">
@@ -22,6 +23,7 @@ export default function IconLabelButtons({
         className={className}
         onClick={onClick}
         style={{ color: textcolor, width: buttonWidth}}
+        type={type}
       >
         {name}
       </Button>
