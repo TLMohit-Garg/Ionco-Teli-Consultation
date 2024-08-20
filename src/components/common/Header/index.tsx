@@ -9,10 +9,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Divider from "@mui/material/Divider";
 import Popover from "@mui/material/Popover";
 import styles from "../../../Styles/header.module.css";
-// import LoginPopover from "../../doctorLoginPopover";
-import PatientSignup from "../../patientSignupForm";
-import CustomSelect from "../../customSelect";
-import DoctorSignup from "../../doctorSignUpForm";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -55,7 +52,9 @@ function Header() {
             alignItems="center"
             className={styles.imageStack}
           >
-            <img src={ioncoLogo} alt="logo" className={styles.logo} />
+            <Link to="/home">
+              <img src={ioncoLogo} alt="logo" className={styles.logo} />
+            </Link>
           </Grid>
           <Grid
             item
@@ -247,7 +246,9 @@ function Header() {
             </Button>
           </Grid>
           <Grid container justifyContent={"center"}>
-            <Button variant="text">Join Now</Button>
+            <Link to="/patientSignup" onClick={handleClose}>
+              <Button variant="text">Join Now</Button>
+            </Link>
           </Grid>
         </Grid>
       </Popover>
@@ -299,14 +300,12 @@ function Header() {
             </Button>
           </Grid>
           <Grid container justifyContent={"center"}>
-            <Button variant="text">Register</Button>
+            <Link to="/doctorSignup" onClick={handleClose}>
+              <Button variant="text">Register</Button>
+            </Link>
           </Grid>
         </Grid>
       </Popover>
-
-      {/* <LoginPopover /> */}
-      {/* <PatientSignup/> */}
-      <DoctorSignup/>
     </>
   );
 }

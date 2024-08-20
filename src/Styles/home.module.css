@@ -1,0 +1,65 @@
+.completeBannerSectionGroup {
+}
+.teliConsultationWith {
+  height: auto;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: Inter, sans-serif;
+  font-stretch: expanded;
+  text-align-last: center;
+  overflow-wrap: break-word;
+  text-align: center;
+  line-height: 1.5;
+}
+/* .completeBannerSectionGroup .teliConsultationWith .headerText {
+  font-size: 40px;
+  font-weight: bold;
+  font-family: Inter, sans-serif;
+  font-stretch: expanded;
+} */
+
+.bannerHeadingChild {
+  width: 477.1px;
+  height: 15px;
+}
+.bannerParatext {
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  display: inline-block;
+  font-size: 20px;
+  font-family: Inter, sans-serif;
+  color: #8e92a4;
+  text-align-last: center;
+  text-align: center;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+
+.headerGrid {
+  font-size: 35px;
+  font-weight: bold;
+  font-family: Inter, sans-serif;
+  font-stretch: expanded;
+  text-align-last: left;
+  overflow-wrap: break-word;
+  text-align: left;
+  line-height: 1.5;
+  letter-spacing: 1px;
+}
+.paraGrid {
+  font-size: 17px;
+  font-weight: 450;
+  font-family: Inter, sans-serif;
+  font-stretch: expanded;
+  text-align-last: left;
+  overflow-wrap: break-word;
+  text-align: left;
+  line-height: 1.5;
+  color: #8e92a4;
+  display: inline-block;
+  letter-spacing: 0.6px;
+  padding-top: 15px;
+  letter-spacing: 3px;
+}
+.rightsideGrid{
+}

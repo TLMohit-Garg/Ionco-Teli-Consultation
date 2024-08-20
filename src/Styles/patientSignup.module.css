@@ -1,3 +1,8 @@
+.parentGrid{
+  margin-top: 22px;
+  margin-bottom: 22px;
+}
+
 .parentContainer .errorMsg{
 color: red;
 font-size: 12px;

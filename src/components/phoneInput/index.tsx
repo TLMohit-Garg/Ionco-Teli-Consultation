@@ -48,7 +48,7 @@ const PhoneInput = ({
               <>
                 <ReactPhoneInput
                   {...field}
-                  country="in"
+                  country="us"
                   searchClass="search-class"
                   containerStyle={containerStyle}
                   disableSearchIcon

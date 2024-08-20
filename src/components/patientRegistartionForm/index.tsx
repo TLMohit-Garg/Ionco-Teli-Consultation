@@ -3,25 +3,32 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createDoctorsSchema } from "../../utils/validation";
 import CustomTextField from "../customTextField";
-import styles from "../../Styles/doctorsSignup.module.css";
 import CustomSelect from "../customSelect";
 import perInfoData from "../infoDataJSON/userData.json";
 import PhoneInput from "../phoneInput";
 import IconLabelButtons from "../CustomButton/Button";
+import { Toast } from "../ToastMessage";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import styles from "../../Styles/patientSignup.module.css";
 
-export default function DoctorSignup() {
+export default function PatientSignup() {
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset 
   }: any = useForm({
     resolver: yupResolver(createDoctorsSchema),
   });
   const handleSignup = (data: any) => {
-    alert(JSON.stringify(data));
+    console.log(JSON.stringify(data));
+    Toast("success", "Signup successful!");
+    reset();
   };
+
   return (
-    <Grid container xs={12} md={12} sm={12} lg={12} xl={12} justifyContent={"space-evenly"}>
+    <Grid container xs={12} md={12} sm={12} lg={12} xl={12} justifyContent={"space-evenly"} className={styles.parentGrid}>
       <Grid
         container
         item
@@ -214,6 +221,7 @@ export default function DoctorSignup() {
             type="submit"
             />
           </Grid>
+          <ToastContainer />
         </form>
       </Grid>
     </Grid>

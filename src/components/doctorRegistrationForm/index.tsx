@@ -12,7 +12,7 @@ import { FormData } from "../../customDataTypes/datatypes";
 // import simulatedApi from "../api/api";
 
 
-const PatientSignup: React.FC = () => {
+const DoctorSignup: React.FC = () => {
   const {
     control,
     register,
@@ -199,4 +199,4 @@ const PatientSignup: React.FC = () => {
   );
 };
 
-export default PatientSignup;
+export default DoctorSignup;
