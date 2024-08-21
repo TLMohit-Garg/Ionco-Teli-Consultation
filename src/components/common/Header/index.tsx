@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import ioncoLogo from "../../../assets/IoncoSolutionsLogo.png";
 import IconLabelButtons from "../../CustomButton/Button";
 import stethoscope from "../../../assets/SythethoScope.jpg";
@@ -7,9 +7,10 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PersonIcon from "@mui/icons-material/Person";
 import Divider from "@mui/material/Divider";
-import Popover from "@mui/material/Popover";
 import styles from "../../../Styles/header.module.css";
 import { Link } from "react-router-dom";
+import DoctorPopover from "../../doctorPopover";
+import PatientPopover from "../../patientPopover";
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -21,12 +22,14 @@ function Header() {
     setAnchorEl(event.currentTarget);
   };
 
+  // Patient popover
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
+  //Doctor popover
   const openPopover = Boolean(showpopover);
   const idLogin = openPopover ? "simple" : undefined;
   const handleloginPopover = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -193,119 +196,18 @@ function Header() {
         </Grid>
         <Divider className={styles.divider} />
       </Grid>
-      <Popover
-        open={open}
-        onClose={handleClose}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
-        <Grid
-          container
-          className={styles.doctorLoginParentsection}
-          sx={{ width: 250 }}
-        >
-          <Grid className={styles.doctorHeader}>My Login area</Grid>
-          <Divider className={styles.divider} />
-          <Grid className={styles.email}>Telephone number or email</Grid>
-          <Grid
-            container
-            justifyContent={"center"}
-            className={styles.textFieldParent}
-          >
-            <TextField
-              id="outlined-basic"
-              label="Email"
-              variant="outlined"
-              fullWidth
-              className={styles.textField}
-              InputLabelProps={{
-                classes: {
-                  root: styles.inputLabelProp, //Apply Custom styles to the Input Label
-                },
-              }}
-            />
-          </Grid>
-          <Grid className={styles.password}>Password</Grid>
-          <Grid container justifyContent={"center"}>
-            <TextField
-              id="outlined-basic"
-              label="Password"
-              variant="outlined"
-              fullWidth
-            />
-          </Grid>
-          <Grid className={styles.forgetPassword}>
-            Have you forgotten your password?
-          </Grid>
-          <Grid container justifyContent={"center"} className={styles.loginBtn}>
-            <Button variant="outlined" size="large" fullWidth>
-              Login
-            </Button>
-          </Grid>
-          <Grid container justifyContent={"center"}>
-            <Link to="/patientSignup" onClick={handleClose}>
-              <Button variant="text">Join Now</Button>
-            </Link>
-          </Grid>
-        </Grid>
-      </Popover>
 
-      <Popover
+      {/* Popover  */}
+      <PatientPopover
+        open={open}
+        handleClose={handleClose}
+        anchorEl={anchorEl}
+      />
+      <DoctorPopover
         open={openPopover}
-        onClose={closePopover}
         anchorEl={showpopover}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        id={idLogin}
-      >
-        <Grid
-          container
-          className={styles.doctorLoginParentsection}
-          sx={{ width: 250 }}
-        >
-          <Grid className={styles.doctorHeader}>
-            I want to be a part of Doctors
-          </Grid>
-          <Grid className={styles.doctorHeader}>My Login area</Grid>
-          <Divider className={styles.divider} />
-          <Grid className={styles.email}>Telephone number or email</Grid>
-          <Grid container justifyContent={"center"}>
-            <TextField
-              id="outlined-basic"
-              label="Email"
-              variant="outlined"
-              fullWidth
-            />
-          </Grid>
-          <Grid className={styles.password}>Password</Grid>
-          <Grid container justifyContent={"center"}>
-            <TextField
-              id="outlined-basic"
-              label="Password"
-              variant="outlined"
-              fullWidth
-            />
-          </Grid>
-          <Grid className={styles.forgetPassword}>
-            Have you forgotten your password?
-          </Grid>
-          <Grid container justifyContent={"center"} className={styles.loginBtn}>
-            <Button variant="outlined" size="large" fullWidth>
-              Login
-            </Button>
-          </Grid>
-          <Grid container justifyContent={"center"}>
-            <Link to="/doctorSignup" onClick={handleClose}>
-              <Button variant="text">Register</Button>
-            </Link>
-          </Grid>
-        </Grid>
-      </Popover>
+        handleClose={closePopover}
+      />
     </>
   );
 }

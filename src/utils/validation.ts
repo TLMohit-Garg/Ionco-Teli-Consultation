@@ -45,3 +45,20 @@ export const createDoctorsSchema = Yup.object().shape({
 //     .required("Please select your age")
 //     .min(18, "You must be at least 18 years old")
 //     .max(120, "Please enter a valid age"),
+
+export const signinSchema = Yup.object().shape({
+  email: Yup.string()
+    .required("Please enter your email address")
+    .matches(emailRegex, { message: "Please enter a valid email" }),
+    
+    password: Yup.string()
+    .required("Please enter your password")
+    .min(8, "Password must be at least 8 characters long")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/\d/, "Password must contain at least one number")
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    ),
+})

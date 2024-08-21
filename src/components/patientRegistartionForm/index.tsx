@@ -8,27 +8,49 @@ import perInfoData from "../infoDataJSON/userData.json";
 import PhoneInput from "../phoneInput";
 import IconLabelButtons from "../CustomButton/Button";
 import { Toast } from "../ToastMessage";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "../../Styles/patientSignup.module.css";
+import axios from "axios";
 
 export default function PatientSignup() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-    reset 
+    reset,
   }: any = useForm({
     resolver: yupResolver(createDoctorsSchema),
   });
-  const handleSignup = (data: any) => {
-    console.log(JSON.stringify(data));
-    Toast("success", "Signup successful!");
-    reset();
+  
+  const handleSignup = async(data: any) => {
+    // console.log(JSON.stringify(data));
+    try {
+      const response = await axios.post('/api/signup', data);
+      if (response.status === 201) {
+        Toast('success', 'Signup successful!');
+        reset(); // Reset the form fields
+      } else {
+        Toast('error', 'Signup failed!');
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      Toast('error', 'An error occurred during signup!');
+    }
+
   };
 
   return (
-    <Grid container xs={12} md={12} sm={12} lg={12} xl={12} justifyContent={"space-evenly"} className={styles.parentGrid}>
+    <Grid
+      container
+      xs={12}
+      md={12}
+      sm={12}
+      lg={12}
+      xl={12}
+      justifyContent={"space-evenly"}
+      className={styles.parentGrid}
+    >
       <Grid
         container
         item
@@ -41,13 +63,32 @@ export default function PatientSignup() {
       >
         leftSide
       </Grid>
-      <Grid container item xs={5} md={5} sm={5} lg={5} xl={5} className={styles.parentContainer}>
+      <Grid
+        container
+        item
+        xs={5}
+        md={5}
+        sm={5}
+        lg={5}
+        xl={5}
+        className={styles.parentContainer}
+      >
         <form onSubmit={handleSubmit(handleSignup)} style={{ width: "100%" }}>
           <Grid container item xs={12} md={12} sm={12} lg={12} xl={12}>
             <Typography>Registration Form</Typography>
           </Grid>
-          <Grid container item xs={12} md={12} sm={12} lg={12} xl={12} mt={3} justifyContent={"space-between"}>
-            <Grid container item xs={12} md={5} sm={12} lg={5} xl={5} >
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            mt={3}
+            justifyContent={"space-between"}
+          >
+            <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
               <CustomTextField
                 error={Boolean(errors.firstName)}
                 errorCondition={
@@ -84,7 +125,17 @@ export default function PatientSignup() {
           </Grid>
 
           {/* Second Row start */}
-          <Grid container item xs={12} md={12} sm={12} lg={12} xl={12} mt={3} justifyContent={"space-between"}>
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            mt={3}
+            justifyContent={"space-between"}
+          >
             <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
               <CustomTextField
                 error={Boolean(errors.password)}
@@ -122,7 +173,17 @@ export default function PatientSignup() {
           </Grid>
 
           {/* Third Row start */}
-          <Grid container item xs={12} md={12} sm={12} lg={12} xl={12} mt={3} justifyContent={"space-between"}>
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            mt={3}
+            justifyContent={"space-between"}
+          >
             <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
               <CustomSelect
                 error={Boolean(errors.nationality)}
@@ -162,7 +223,17 @@ export default function PatientSignup() {
           </Grid>
 
           {/* Fourth Row start */}
-          <Grid container item xs={12} md={12} sm={12} lg={12} xl={12} mt={3} justifyContent={"space-between"}>
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            mt={3}
+            justifyContent={"space-between"}
+          >
             <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
               <CustomTextField
                 error={Boolean(errors.email)}
@@ -200,25 +271,37 @@ export default function PatientSignup() {
           </Grid>
 
           {/* Fifth Row start */}
-          <Grid container item xs={12} md={12} sm={12} lg={12} xl={12} mt={3} justifyContent={"space-between"} className={styles.phoneContainer}>
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            mt={3}
+            justifyContent={"space-between"}
+            className={styles.phoneContainer}
+          >
             <Grid item xs={6} md={6} sm={6} lg={6} xl={6}>
-            <PhoneInput
-            control={control}
-            name="phone"
-            error={Boolean(errors?.phone)}
-            containerClass={styles.containerPhn}
-            inputClass={`${styles.inputPhn} ${Boolean(errors?.phone) ? styles.errorBorder : ""}`}
-            placeholder="+91-8050656794"
-            helperText={errors?.phone?.message}
-            />
+              <PhoneInput
+                control={control}
+                name="phone"
+                error={Boolean(errors?.phone)}
+                containerClass={styles.containerPhn}
+                inputClass={`${styles.inputPhn} ${
+                  Boolean(errors?.phone) ? styles.errorBorder : ""
+                }`}
+                placeholder="+91-8050656794"
+                helperText={errors?.phone?.message}
+              />
             </Grid>
-            
           </Grid>
           <Grid mt={3} container justifyContent={"flex-end"}>
             <IconLabelButtons
-            name="CREATE MY ACCOUNT"
-            className={styles.submitBtn}
-            type="submit"
+              name="CREATE MY ACCOUNT"
+              className={styles.submitBtn}
+              type="submit"
             />
           </Grid>
           <ToastContainer />

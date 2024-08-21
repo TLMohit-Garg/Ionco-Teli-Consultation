@@ -1,21 +1,11 @@
 import styles from "../../Styles/home.module.css";
 import { Grid } from "@mui/material";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 export default function Home() {
-  const [jokes, setJokes] = useState([]);
-useEffect(() => {
-  axios.get("/api/jokes")
-  .then((response) => {
-    setJokes(response.data);
-  })
-  .catch(({error}:any) => {
-    console.log("Error");
-  });
-});
+
   return (
     <>
+    {/* Banner Section */}
       <Grid
         className={styles.completeBannerSectionGroup}
         container
@@ -100,7 +90,6 @@ useEffect(() => {
           mb={12}
           justifyContent={"center"}
         >
-          left
         </Grid>
         <Grid
           className={styles.rightsideGrid}
@@ -165,12 +154,9 @@ useEffect(() => {
              md={6}
              sm={6}
              xs={6}
-            >{jokes.map((joke, index) => (
-              <div key={joke.id}>
-                <h1>{jokes.title}</h1>
-                <p>{jokes.content}</p>
-              </div>
-            ))}</Grid>
+            >
+
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

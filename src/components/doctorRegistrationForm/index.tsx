@@ -10,6 +10,7 @@ import {
 import { FormData } from "../../customDataTypes/datatypes";
 // import { customSelectProps } from "../../customDataTypes/datatypes";
 // import simulatedApi from "../api/api";
+import axios from "axios";
 
 
 const DoctorSignup: React.FC = () => {
@@ -23,28 +24,28 @@ const DoctorSignup: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      age: 18,
-      gender: "",
-      address: { city: "", state: "" },
-      hobbies: [{ name: "" }],
-      startDate: new Date(),
-      subscribe: false,
-      referral: "",
+      name: "",
+      price: 1,
+      quantity: 1,
+      // age: 18,
+      // gender: "",
+      // address: { city: "", state: "" },
+      // hobbies: [{ name: "" }],
+      // startDate: new Date(),
+      // subscribe: false,
+      // referral: "",
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "hobbies",
-  });
+  // const { fields, append, remove } = useFieldArray({
+  //   control,
+  //   name: "hobbies",
+  // });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     // setError("");
     try {
-      const response = await (data);
+      const response = await axios.post("/api/products");
       console.log("Success:", response);
       // Handle success (e.g., show a success message, redirect, etc.)
     } catch (error: any) {
@@ -63,37 +64,39 @@ const DoctorSignup: React.FC = () => {
       <div>
         <label>First Name</label>
         <input
-          {...register("firstName", { required: "First Name is required" })}
+          {...register("name", { required: "First Name is required" })}
         />
-        {errors.firstName && (
-          <p style={{ color: "orangered" }}>{errors.firstName.message}</p>
+        {errors.name && (
+          <p style={{ color: "orangered" }}>{errors.name.message}</p>
         )}
       </div>
 
       <div>
-        <label>Last Name</label>
+        <label>price</label>
         <input
-          {...register("lastName", { required: "Last Name is required" })}
+          type="number"
+          {...register("price", { required: "price is required" })}
         />
-        {errors.lastName && (
-          <p style={{ color: "orangered" }}>{errors.lastName.message}</p>
+        {errors.price && (
+          <p style={{ color: "orangered" }}>{errors.price.message}</p>
         )}
       </div>
 
       <div>
-        <label>Email</label>
+        <label>quantity</label>
         <input
-          {...register("email", {
-            required: "Email is required",
-            pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
+          type="number"
+          {...register("quantity", {
+            required: "quantity is required",
+            // pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
           })}
         />
-        {errors.email && (
-          <p style={{ color: "orangered" }}>{errors.email.message}</p>
+        {errors.quantity && (
+          <p style={{ color: "orangered" }}>{errors.quantity.message}</p>
         )}
       </div>
 
-      <div>
+      {/* <div>
         <label>Age</label>
         <input
           type="number"
@@ -188,7 +191,7 @@ const DoctorSignup: React.FC = () => {
             <p style={{ color: "orangered" }}>{errors.referral.message}</p>
           )}
         </div>
-      )}
+      )} */}
 
       {errors.root && <p style={{ color: "red" }}>{errors.root.message}</p>}
 
