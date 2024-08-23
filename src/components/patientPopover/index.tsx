@@ -27,8 +27,12 @@ const PatientPopover: React.FC<PatientPopoverProps> = ({
     try {
       const response = await axios.post("/api/signin", data);
       if (response.status === 200) {
+        const token = response.data.token;
+        // Store the token in localStorage
+        localStorage.setItem('token', token);
         Toast("success", "Sign in succesfully");
         reset();
+        console.log('Token stored successfully');
       } else {
         Toast("error", "Sign-in failed!");
       }

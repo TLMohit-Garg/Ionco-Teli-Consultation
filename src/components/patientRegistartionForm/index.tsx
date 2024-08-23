@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createDoctorsSchema } from "../../utils/validation";
+import { createPatientSchema } from "../../utils/validation";
 import CustomTextField from "../customTextField";
 import CustomSelect from "../customSelect";
 import perInfoData from "../infoDataJSON/userData.json";
@@ -20,7 +20,7 @@ export default function PatientSignup() {
     formState: { errors },
     reset,
   }: any = useForm({
-    resolver: yupResolver(createDoctorsSchema),
+    resolver: yupResolver(createPatientSchema),
   });
   
   const handleSignup = async(data: any) => {

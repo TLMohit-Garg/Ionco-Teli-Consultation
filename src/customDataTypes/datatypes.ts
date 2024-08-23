@@ -67,3 +67,17 @@ export type PatientPopoverProps = {
   anchorEl: HTMLButtonElement | null;
   handleClose: () => void;
 };
+
+export type CheckBoxprops = {
+  checked?: any;
+  handleChange: any;
+}
+export type Fileupload ={
+  classes?: string,
+  form?: any,
+  name?: any,
+  control?: any,
+  helperText?: string,
+  errstyle?:any,
+  error?: Boolean,
+}
