@@ -11,6 +11,7 @@ export type ButtonProps = {
   hoverBackgroundColor?: string;
   hoverTextColor?: string;
   type?: any;
+  fullWidth?:boolean;
 };
 
 
@@ -80,4 +81,17 @@ export type Fileupload ={
   helperText?: string,
   errstyle?:any,
   error?: Boolean,
+}
+
+export type CardComponentProps ={
+  directoryUsersData: Array<{
+    id?: string;
+    status?: string;
+    displayName?: string;
+    jobTitleName?: string;
+    departmentName?: string;
+    joiningDate?: string;
+    phone?: string;
+    email?: string;
+  }>;
 }

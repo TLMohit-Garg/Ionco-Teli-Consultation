@@ -1,0 +1,183 @@
+.mainSection {
+  width: 70%;
+}
+
+.employeeDetailsDialog,
+.profileMainWrapper {
+  border-radius: 10px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: 0px;
+  border-radius: inherit;
+}
+
+.modalContent {
+}
+.arrow {
+}
+.closeIcon {
+  margin: 15px;
+  cursor: pointer;
+}
+.modalContent .textDoctor {
+  font-size: 34px;
+  font-weight: bold;
+  color: #10a0bd;
+}
+.divider {
+  width: 100%;
+}
+.leftContainer {
+  /* border: 1px solid blue; */
+}
+.modalContent .userProfileSection {
+  /* border:1px solid red; */
+  width: 100%;
+  height: auto;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.userProfileSection .imageDoctor {
+  height: 95%;
+  padding: 1px;
+  width: 90%;
+  cursor: pointer;
+}
+.userProfileSection .infoContainer {
+  /* border:1px solid red; */
+  background-color: #10a0bd;
+  margin-top: -90px;
+  border-radius: 7px;
+  height: 30%;
+}
+.userProfileSection .infoContainer .doctorName {
+  font-size: 34px;
+  font-weight: bold;
+  color: white;
+  margin-top: 10px;
+}
+.userProfileSection .infoContainer .doctorDescription {
+  font-size: 18px;
+  font-weight: medium;
+  color: white;
+  text-align: center;
+  margin: 20px;
+}
+.userProfileSection .infoContainer .consultationDone {
+  font-size: 20px;
+  font-weight: bolder;
+  /* color: #001439; */
+  color: #ffff;
+  text-align: center;
+  display: flex;
+  justify-items: baseline;
+}
+.userProfileSection .infoContainer .consultationCharges {
+  font-size: 20px;
+  font-weight: bolder;
+  color: #ffff;
+  text-align: center;
+  display: flex;
+  justify-items: baseline;
+  margin-top: 18px;
+}
+.rightContainer {
+  background-color: #10a0bd;
+  border-radius: 1px;
+  padding: 42px 22px 42px 22px;
+}
+.rightContainer .bookingContainer {
+  width: 80%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid #ffff;
+  /* background-color: #10a0bd; */
+  display: flex;
+  justify-content: center;
+}
+.rightContainer .bookingContainer .text {
+  font-size: 32px;
+  font-weight: bolder;
+  color: #10a0bd;
+  display: flex;
+  text-align: center;
+  justify-items: baseline;
+  margin-top: 18px;
+}
+.userProfileSection .formdivider {
+  width: 100%;
+  color: #10a0bd;
+}
+
+.modalContent .errorMsg {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.modalContent .fieldContainer {
+  color: #10a0bd;
+  border: 1px solid none;
+  width: 300px;
+  height: 50px;
+}
+.modalContent .fieldContainer:hover{
+    color: #10a0bd;
+    border: 1px solid none;
+  }
+.modalContent .fullNameContainer {
+  padding: 12px;
+  margin-top: 22px;
+}
+.modalContent .emailContainer{
+    padding: 12px;
+  margin-top: 22px;
+}
+.modalContent .selectField{
+    color: #10a0bd;
+    border: 1px solid none;
+    width: 300px;
+}
+.modalContent .nationalityContainer{
+    padding: 12px;
+    margin-top: 22px;
+    /* padding-top: 30px; */
+}
+ .customSelect{
+    color:#10a0bd;
+}
+.modalContent .timezoneContainer{
+    padding: 12px;
+    margin-top: 22px;
+}
+.modalContent .inputHeading{
+    color: #10a0bd;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: -100px;
+    margin-top: 10px;
+}
+.modalContent .uploadFile{
+    width: 90%;
+}
+.modalContent .textArea{
+    width: 90%;
+    border: 1px solid #8E92A4;
+}
+
+.modalContent .submitButtonContainer{
+/* border: 1px solid red; */
+}
+.modalContent .buttons{
+margin:22px 0px 12px 0px;
+padding:12px 80px 12px 80px;
+background-color: #10a0bd;
+color: #ffff;
+height: 65%;
+}
+.modalContent .buttons:hover{
+    margin:22px 0px 12px 0px;
+    padding:12px 80px 12px 80px;
+    background-color: #10a0bd;
+    color: #ffff;
+    height: 65%;
+    }

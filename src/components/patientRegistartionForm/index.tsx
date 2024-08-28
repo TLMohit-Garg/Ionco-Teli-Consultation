@@ -24,9 +24,9 @@ export default function PatientSignup() {
   });
   
   const handleSignup = async(data: any) => {
-    // console.log(JSON.stringify(data));
+    console.log(JSON.stringify(data));
     try {
-      const response = await axios.post('/api/signup', data);
+      const response = await axios.post('/api/patientSignup', data);
       if (response.status === 201) {
         Toast('success', 'Signup successful!');
         reset(); // Reset the form fields

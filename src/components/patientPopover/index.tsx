@@ -24,12 +24,16 @@ const PatientPopover: React.FC<PatientPopoverProps> = ({
   });
 
   const handleSignIn = async (data: any) => {
+    console.log(JSON.stringify(data));
+
     try {
-      const response = await axios.post("/api/signin", data);
-      if (response.status === 200) {
-        const token = response.data.token;
+      const response = await axios.post("/api/patientSignin", data);
+      console.log('Response received:', response)
+      if (response.status === 201) {
+        // const token = response.data.token;
         // Store the token in localStorage
-        localStorage.setItem('token', token);
+        // localStorage.setItem('token', token);
+        console.log('Token stored successfully after signin');
         Toast("success", "Sign in succesfully");
         reset();
         console.log('Token stored successfully');
@@ -117,7 +121,7 @@ const PatientPopover: React.FC<PatientPopoverProps> = ({
             Have you forgotten your password?
           </Grid>
           <Grid container justifyContent={"center"} className={styles.loginBtn}>
-            <Button variant="outlined" size="large" type="submit" fullWidth>
+            <Button variant="outlined" size="large" type="submit" fullWidth >
               Login
             </Button>
           </Grid>

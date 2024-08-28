@@ -16,7 +16,7 @@ const AuthWrapper= () => {
 
       if (!token) {
         // No token found, redirect to login page
-        window.location.href = '/login';
+        window.location.href = '/about';
         return;
       }
 
@@ -37,7 +37,7 @@ const AuthWrapper= () => {
         // Token is expired
         localStorage.removeItem('token'); // Optionally clear the token
         alert('Session expired. Please log in again.');
-        window.location.href = '/login'; // Redirect to login page
+        window.location.href = '/about'; // Redirect to login page
         return;
       }
 
