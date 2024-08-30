@@ -15,6 +15,7 @@ type CustomCardProps = {
   description: string;
   buttonText: string;
   onButtonClick: () => void;
+  speciality?: string;
 };
 
 export default function CustomCard({
@@ -23,6 +24,7 @@ export default function CustomCard({
   description,
   buttonText,
   onButtonClick,
+  speciality
 }: CustomCardProps) {
 
   const[modalOpen, setmodalOpen] = React.useState(false);
@@ -41,13 +43,16 @@ export default function CustomCard({
       <CardActionArea>
         <CardMedia
           component="img"
-          height="290"
+          height="331"
           image={image}
           // alt={title}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}
+          </Typography>
+          <Typography gutterBottom>
+          {speciality}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             {description}

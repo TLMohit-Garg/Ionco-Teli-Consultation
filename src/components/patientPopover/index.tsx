@@ -5,6 +5,8 @@ import { PatientPopoverProps } from "../../customDataTypes/datatypes";
 import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
 import { Toast } from "../ToastMessage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signinSchema } from "../../utils/validation";
 import styles from "../../Styles/header.module.css";
@@ -29,7 +31,7 @@ const PatientPopover: React.FC<PatientPopoverProps> = ({
     try {
       const response = await axios.post("/api/patientSignin", data);
       console.log('Response received:', response)
-      if (response.status === 201) {
+      if (response.status === 200) {
         // const token = response.data.token;
         // Store the token in localStorage
         // localStorage.setItem('token', token);
@@ -131,6 +133,7 @@ const PatientPopover: React.FC<PatientPopoverProps> = ({
             </Link>
           </Grid>
         </Grid>
+        <ToastContainer />
       </form>
     </Popover>
   );

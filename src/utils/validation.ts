@@ -40,12 +40,25 @@ export const createDoctorsSchema = Yup.object().shape({
     }),
   phone: Yup.string().required("Please enter the Mobile Number"),
 });
-//   age: Yup.string()
-//     .required("Please select your age")
-//     .min(18, "You must be at least 18 years old")
-//     .max(120, "Please enter a valid age"),
 
 export const signinSchema = Yup.object().shape({
+  email: Yup.string()
+    .required("Please enter your email address")
+    .matches(emailRegex, { message: "Please enter a valid email" }),
+
+  password: Yup.string()
+    .required("Please enter your password")
+    .min(8, "Password must be at least 8 characters long")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/\d/, "Password must contain at least one number")
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    ),
+});
+
+export const doctorSigninSchema = Yup.object().shape({
   email: Yup.string()
     .required("Please enter your email address")
     .matches(emailRegex, { message: "Please enter a valid email" }),
@@ -117,5 +130,6 @@ export const consultationBookingSchema = Yup.object().shape({
   additionalNotes: Yup.string()
     .min(2, "additionalNotes must be at least 2 characters long")
     .max(850, "additionalNotesmust be less than 50 characters long"),
-
+    prefferDate: Yup.string()
+    .required("Please select the preffered date")
 });

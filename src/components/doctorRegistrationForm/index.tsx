@@ -15,6 +15,8 @@ import perInfoData from "../infoDataJSON/userData.json";
 import InputFileUpload from "../CustomFileuploadBtn";
 import CustomCheckBox from "../customCheckbox";
 import { Toast } from "../ToastMessage";
+import consultationImage from "../../assets/doctorRegistration.jpg";
+
 
 const DoctorSignup: React.FC = () => {
   const [checkedbox, setcheckedbox] = React.useState<boolean>(false);
@@ -208,7 +210,7 @@ const DoctorSignup: React.FC = () => {
         xl={5}
         sx={{ background: "lightGrey" }}
       >
-        leftSide
+        <img src={consultationImage} className={styles.consultationImg}/>
       </Grid>
       <Grid
         container
@@ -222,7 +224,7 @@ const DoctorSignup: React.FC = () => {
       >
         <form onSubmit={handleSubmit(handleSignup)} style={{ width: "100%" }}>
           <Grid container item xs={12} md={12} sm={12} lg={12} xl={12}>
-            <Typography>Registration Form</Typography>
+            <Typography className={styles.registrationformHeading}>Registration Form</Typography>
           </Grid>
           <Grid
             container

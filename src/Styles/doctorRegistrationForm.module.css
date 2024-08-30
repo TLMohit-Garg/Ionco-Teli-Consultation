@@ -9,6 +9,17 @@
     margin-bottom: 22px;
   }
   
+  .parentGrid .consultationImg{
+    width: 100%;
+  
+  }
+  .parentGrid .parentContainer .registrationformHeading{
+    font-size: 42px;
+    font-weight: bolder;
+    color: #10a0bd;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
   .parentContainer .errorMsg{
   color: red;
   font-size: 12px;
@@ -22,7 +33,7 @@
   width:120%;
   }
   .parentContainer .selectField div:nth-child(2){
-     /* width: 100%; */
+   width: 111%;
      font-size: 14px;
      color: #8E92A4;
   }
@@ -50,14 +61,12 @@
     padding: 10px 30px;
     border: 1px solid #10A0BD;
   }
-  .phoneContainer{
-    /* border: 1px solid red; */
-  }
+  
   .parentContainer .phoneContainer .inputPhn {
       height: 40px;
       font-size: 14px;
       border-radius: 5px;
-      width: 90%;
+      width: 71%;
     }
     .parentContainer .phoneContainer .containerPhn div:nth-child(3) {
       border-radius: 5px 0px 0px 5px;

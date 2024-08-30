@@ -6,7 +6,6 @@ import {
   Typography,
   Card,
   CardContent,
-  colors,
   TextareaAutosize,
 } from "@mui/material";
 import FullScreenDialog from "../sliderModal";
@@ -20,6 +19,10 @@ import styles from "../../Styles/doctorSlider.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import WorkIcon from '@mui/icons-material/Work';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import GradeIcon from '@mui/icons-material/Grade';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
 import CustomTextField from "../customTextField";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,9 +30,10 @@ import { consultationBookingSchema } from "../../utils/validation";
 import CustomSelect from "../customSelect";
 import perInfoData from "./data.json";
 import PhoneInput from "../phoneInput";
-import InputField from "../TextField";
 import { Toast } from "../ToastMessage";
 import IconLabelButtons from "../CustomButton/Button";
+import CustomDatePicker from "../customDatePicker";
+import FileUploader from "../customDragandDop";
 // import { blue } from "@mui/material/colors";
 
 const DoctorDetailsModal = ({
@@ -88,6 +92,8 @@ const DoctorDetailsModal = ({
       console.error("Error uploading the file:", error);
     }
   };
+
+  const handleSignup = async(data: any) => {}
   return (
     <>
       <FullScreenDialog
@@ -170,6 +176,8 @@ const DoctorDetailsModal = ({
                   lg={12}
                   xl={12}
                   justifyContent={"center"}
+                className={styles.imageContainer}
+
                 >
                   <img src={doctorimage} className={styles.imageDoctor} />
                 </Grid>
@@ -207,15 +215,33 @@ const DoctorDetailsModal = ({
                     lg={12}
                     xl={12}
                     justifyContent={"center"}
+                    mb={5}
+                  >
+                    <Typography className={styles.doctorSpeciality}>
+                      HEART SURGEON
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    xs={10}
+                    md={10}
+                    sm={10}
+                    lg={10}
+                    xl={10}
+                    justifyContent={"center"}
                   >
                     <Typography className={styles.doctorDescription}>
                       Experienced orthopedic surgeon specializing in joint
                       replacement surgeries. Experienced orthopedic surgeon
-                      specializing in joint replacement surgeries.
+                      specializing in joint replacement surgeries. Experienced
+                      orthopedic surgeon specializing in joint replacement
+                      surgeries.
                     </Typography>
                   </Grid>
-                  <Grid
-                    container
+                  
+                </Grid>
+                <Grid container
                     item
                     xs={12}
                     md={12}
@@ -223,30 +249,139 @@ const DoctorDetailsModal = ({
                     lg={12}
                     xl={12}
                     justifyContent={"center"}
+                    className={styles.secondContainer}
+                    >
+                <Grid
+                    container
+                    item
+                    xs={6}
+                    md={6}
+                    sm={6}
+                    lg={6}
+                    xl={6}
+                    justifyContent={"center"}
                   >
-                    <Typography className={styles.consultationDone}>
+                    <Grid container item justifyContent={"center"} alignItems={"start"} className={styles.consultationDone}
+                    xs={4}
+                    md={4}
+                    sm={4}
+                    lg={4}
+                    xl={4}>
                       <CheckCircleIcon
-                        sx={{ fontSize: "28px", margin: "5px, 9px, 5px, 12px" }}
-                      />{" "}
+                        sx={{ fontSize: "58px", margin: "5px, 9px, 5px, 12px", color:"#10a0bd" }}
+                      />
+                      </Grid>
+
+                      <Grid container item justifyContent={"left"} alignItems={"start"} pt={1}
+                      xs={7}
+                      md={7}
+                      sm={7}
+                      lg={7}
+                      xl={7}
+                      className={styles.consultationText}>
                       120 Consultaion done
-                    </Typography>
+                    </Grid>
                   </Grid>
                   <Grid
                     container
                     item
-                    xs={12}
-                    md={12}
-                    sm={12}
-                    lg={12}
-                    xl={12}
+                    xs={6}
+                    md={6}
+                    sm={6}
+                    lg={6}
+                    xl={6}
                     justifyContent={"center"}
                   >
-                    <Typography className={styles.consultationCharges}>
+                    <Grid container item justifyContent={"center"} alignItems={"start"} className={styles.consultationDone}
+                    xs={3}
+                    md={3}
+                    sm={3}
+                    lg={3}
+                    xl={3}
+                    >
+
+                    {/* <Typography className={styles.consultationCharges}> */}
                       <MonetizationOnIcon
-                        sx={{ fontSize: "28px", marginRight: "12px" }}
-                      />{" "}
-                      13 Hourly Charges
-                    </Typography>
+                        sx={{ fontSize: "58px", margin: "5px, 9px, 5px, 12px", color:"#10a0bd" }}
+                        />
+                        </Grid>
+                        <Grid container item justifyContent={"left"} alignItems={"start"} pt={1}
+                      xs={9}
+                      md={9}
+                      sm={9}
+                      lg={9}
+                      xl={9}
+                      className={styles.consultationText}>
+                      13 Per Hour
+                      </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    xs={6}
+                    md={6}
+                    sm={6}
+                    lg={6}
+                    xl={6}
+                    justifyContent={"center"}
+
+                  >
+                    <Grid container item justifyContent={"center"} alignItems={"start"} className={styles.consultationDone}
+                    xs={4}
+                    md={4}
+                    sm={4}
+                    lg={4}
+                    xl={4}>
+
+                      <ReviewsIcon
+                        sx={{ fontSize: "58px", margin: "5px, 9px, 5px, 12px", color:"#10a0bd" }}
+                        />
+                        </Grid>
+                      <Grid container item justifyContent={"left"} alignItems={"start"} pt={1}
+                      xs={7}
+                      md={7}
+                      sm={7}
+                      lg={7}
+                      xl={7}
+                      className={styles.consultationText}
+                    >
+                      <GradeIcon/>
+                      <GradeIcon/>
+                      <GradeIcon/>
+                      <GradeIcon/>
+                      <StarHalfIcon/>
+                      </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    xs={6}
+                    md={6}
+                    sm={6}
+                    lg={6}
+                    xl={6}
+                    justifyContent={"center"}
+                  >
+                    <Grid container item justifyContent={"start"} alignItems={"start"} className={styles.consultationDone}
+                    xs={3}
+                    md={3}
+                    sm={3}
+                    lg={3}
+                    xl={3}
+                    >
+                      <WorkIcon
+                        sx={{ fontSize: "58px", margin: "5px, 9px, 5px, 12px", color:"#10a0bd" }}
+                        />
+                        </Grid>
+                      <Grid container item justifyContent={"left"} alignItems={"start"} pt={1}
+                      xs={9}
+                      md={9}
+                      sm={9}
+                      lg={9}
+                      xl={9}
+                      className={styles.consultationText}>
+                      15 Years of Exp
+                      </Grid>
                   </Grid>
                 </Grid>
               </Grid>
@@ -266,10 +401,17 @@ const DoctorDetailsModal = ({
               >
                 <Card className={styles.bookingContainer}>
                   <CardContent>
+
+                  <form onSubmit={handleSubmit(handleSignup)}>
                     <Typography className={styles.text}>
                       Book Consultation Now
                     </Typography>
                     <Divider className={styles.formdivider} />
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                        Full Name
+                      </Typography>
+                    </Grid>
                     <Grid
                       container
                       item
@@ -293,8 +435,13 @@ const DoctorDetailsModal = ({
                         name="fullName"
                         fullWidth={true}
                         className={styles.fieldContainer}
-                        placeholder="Full Name"
+                        placeholder="Enter your full name"
                       />
+                    </Grid>
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                       Email
+                      </Typography>
                     </Grid>
                     <Grid
                       container
@@ -321,6 +468,40 @@ const DoctorDetailsModal = ({
                         className={styles.fieldContainer}
                         placeholder="Email Address"
                       />
+                    </Grid>
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                        Date & Time
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      className={styles.nationalityContainer}
+                      xs={12}
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      xl={12}
+                    >
+                      <CustomDatePicker
+                        error={Boolean(errors.prefferDate)}
+                        errorCondition={
+                          errors.prefferDate && (
+                            <Typography className={styles.errorMsg}>
+                              {errors.prefferDate.message}
+                            </Typography>
+                          )
+                        }
+                        control={control}
+                        name="prefferDate"
+                        className={styles.datefieldContainer}
+                      />
+                    </Grid>
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                        Nationality
+                      </Typography>
                     </Grid>
                     <Grid
                       container
@@ -350,6 +531,11 @@ const DoctorDetailsModal = ({
                         className={styles.customSelect}
                       />
                     </Grid>
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                        Time Zone
+                      </Typography>
+                    </Grid>
                     <Grid
                       container
                       item
@@ -378,6 +564,11 @@ const DoctorDetailsModal = ({
                         className={styles.customSelect}
                       />
                     </Grid>
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                        Phone number
+                      </Typography>
+                    </Grid>
                     <Grid
                       container
                       item
@@ -399,6 +590,11 @@ const DoctorDetailsModal = ({
                         placeholder="+91-8050656794"
                         helperText={errors?.phone?.message}
                       />
+                    </Grid>
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                        Cancer types
+                      </Typography>
                     </Grid>
                     <Grid
                       container
@@ -428,6 +624,27 @@ const DoctorDetailsModal = ({
                         className={styles.customSelect}
                       />
                     </Grid>
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                        Upload file(Doctor Prescription's etc...)
+                      </Typography>
+                    </Grid>
+                    
+                    <Grid
+                      container
+                      item
+                      className={styles.timezoneContainer}
+                      xs={12}
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      xl={12}
+                    >
+                      <FileUploader 
+                      name="files"
+                      acceptedFileTypes={['image/jpeg', 'image/png', 'application/pdf', 'image/svg+xml', 'image/webp']}
+                      />
+                    </Grid>
                     <Grid
                       container
                       item
@@ -446,42 +663,9 @@ const DoctorDetailsModal = ({
                         )
                       </Typography>
                     </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.timezoneContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <InputField
-                        type="file"
-                        size="medium"
-                        // label="Upload Document"
-                        className={styles.uploadFile}
-                        error={errors.documentName !== undefined}
-                        helperText={
-                          errors.documentName ? "Please upload a document" : ""
-                        }
-                        onChange={(
-                          event: React.ChangeEvent<HTMLInputElement>
-                        ) => uploadFile(event)}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.timezoneContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <Typography className={styles.inputHeading}>
-                        Reason for Consultation
+                    <Grid className={styles.fullName}>
+                      <Typography className={styles.fullNameTypo}>
+                        Reason for consultation
                       </Typography>
                     </Grid>
                     <Grid
@@ -525,7 +709,8 @@ const DoctorDetailsModal = ({
                         )}
                       />
                     </Grid>
-                    <Grid container
+                    <Grid
+                      container
                       item
                       className={styles.submitButtonContainer}
                       xs={12}
@@ -534,14 +719,15 @@ const DoctorDetailsModal = ({
                       lg={12}
                       xl={12}
                       justifyContent={"center"}
-                      >
-                        <IconLabelButtons 
+                    >
+                      <IconLabelButtons
                         name={"Book Consultation"}
                         type="submit"
                         variant="contained"
                         className={styles.buttons}
-                        />
+                      />
                     </Grid>
+                    </form>
                   </CardContent>
                 </Card>
               </Grid>

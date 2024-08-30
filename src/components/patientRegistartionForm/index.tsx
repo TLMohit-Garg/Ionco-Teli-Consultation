@@ -12,8 +12,14 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "../../Styles/patientSignup.module.css";
 import axios from "axios";
+import consultationImage from "../../assets/ConsultationImage.jpg";
+import CustomCheckBox from "../customCheckbox";
+import React from "react";
+
 
 export default function PatientSignup() {
+  const [checkedbox, setcheckedbox] = React.useState<boolean>(false);
+
   const {
     control,
     handleSubmit,
@@ -39,6 +45,9 @@ export default function PatientSignup() {
     }
 
   };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setcheckedbox(event.target.checked);
+  };
 
   return (
     <Grid
@@ -61,7 +70,7 @@ export default function PatientSignup() {
         xl={5}
         sx={{ background: "lightGrey" }}
       >
-        leftSide
+        <img src={consultationImage} className={styles.consultationImg}/>
       </Grid>
       <Grid
         container
@@ -75,7 +84,7 @@ export default function PatientSignup() {
       >
         <form onSubmit={handleSubmit(handleSignup)} style={{ width: "100%" }}>
           <Grid container item xs={12} md={12} sm={12} lg={12} xl={12}>
-            <Typography>Registration Form</Typography>
+            <Typography  className={styles.registrationformHeading}>Registration Form</Typography>
           </Grid>
           <Grid
             container
@@ -85,7 +94,7 @@ export default function PatientSignup() {
             sm={12}
             lg={12}
             xl={12}
-            mt={3}
+            mt={7}
             justifyContent={"space-between"}
           >
             <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
@@ -185,6 +194,55 @@ export default function PatientSignup() {
             justifyContent={"space-between"}
           >
             <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
+              <CustomTextField
+                error={Boolean(errors.email)}
+                errorCondition={
+                  errors.email && (
+                    <Typography className={styles.errorMsg}>
+                      {errors.email.message}
+                    </Typography>
+                  )
+                }
+                control={control}
+                name="email"
+                fullWidth={true}
+                className={styles.fieldContainer}
+                placeholder="Email"
+              />
+            </Grid>
+            <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
+              <CustomTextField
+                error={Boolean(errors.age)}
+                errorCondition={
+                  errors.age && (
+                    <Typography className={styles.errorMsg}>
+                      {errors.age.message}
+                    </Typography>
+                  )
+                }
+                control={control}
+                name="age"
+                fullWidth={true}
+                className={styles.fieldContainer}
+                placeholder="Age"
+              />
+            </Grid>
+          </Grid>
+          
+
+          {/* Fourth Row start */}
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            mt={3}
+            justifyContent={"space-between"}
+          >
+            <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
               <CustomSelect
                 error={Boolean(errors.nationality)}
                 errorCondition={
@@ -222,54 +280,6 @@ export default function PatientSignup() {
             </Grid>
           </Grid>
 
-          {/* Fourth Row start */}
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            sm={12}
-            lg={12}
-            xl={12}
-            mt={3}
-            justifyContent={"space-between"}
-          >
-            <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
-              <CustomTextField
-                error={Boolean(errors.email)}
-                errorCondition={
-                  errors.email && (
-                    <Typography className={styles.errorMsg}>
-                      {errors.email.message}
-                    </Typography>
-                  )
-                }
-                control={control}
-                name="email"
-                fullWidth={true}
-                className={styles.fieldContainer}
-                placeholder="Email"
-              />
-            </Grid>
-            <Grid container item xs={12} md={5} sm={12} lg={5} xl={5}>
-              <CustomTextField
-                error={Boolean(errors.age)}
-                errorCondition={
-                  errors.age && (
-                    <Typography className={styles.errorMsg}>
-                      {errors.age.message}
-                    </Typography>
-                  )
-                }
-                control={control}
-                name="age"
-                fullWidth={true}
-                className={styles.fieldContainer}
-                placeholder="Age"
-              />
-            </Grid>
-          </Grid>
-
           {/* Fifth Row start */}
           <Grid
             container
@@ -295,6 +305,33 @@ export default function PatientSignup() {
                 placeholder="+91-8050656794"
                 helperText={errors?.phone?.message}
               />
+            </Grid>
+          </Grid>
+          {/* Sixth Row start */}
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            mt={5}
+            justifyContent={"start"}
+            className={styles.checkboxContainer}
+          >
+            <Grid item xs={1} md={1} sm={1} lg={1} xl={1}>
+              <CustomCheckBox
+                checked={checkedbox}
+                handleChange={handleChange}
+              />
+            </Grid>
+            <Grid item container justifyContent={"start"} xs={8} md={8} sm={8} lg={8} xl={8} pt={1}>
+              <Typography className={styles.checkboxText}>
+                I have read and accepted Terms and Conditions and the Privacy
+                Policy , and I wish to receive the Top Doctors Newsletter and
+                Online Magazine on Top Doctors.
+              </Typography>
             </Grid>
           </Grid>
           <Grid mt={3} container justifyContent={"flex-end"}>
