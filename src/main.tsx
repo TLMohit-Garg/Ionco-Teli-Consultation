@@ -13,6 +13,7 @@ import "./index.css";
 import PatientSignup from "./components/patientRegistartionForm/index.tsx";
 import DoctorSignup from "./components/doctorRegistrationForm/index.tsx";
 import Doctors from "./pages/doctors/index.tsx";
+import Testing from "./pages/testing/index.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="/patientSignup" element={<PatientSignup />} />
       <Route path="/doctorSignup" element={<DoctorSignup />} />
       <Route path="/doctors" element={<Doctors />} />
+      <Route path="/testing" element={<Testing />} />
     </Route>
   )
 );

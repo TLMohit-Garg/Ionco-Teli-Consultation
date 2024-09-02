@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 // import styles from "src/Styles/EmployeDetailsModel.module.css";
 import {
@@ -19,10 +19,10 @@ import styles from "../../Styles/doctorSlider.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import WorkIcon from '@mui/icons-material/Work';
-import ReviewsIcon from '@mui/icons-material/Reviews';
-import GradeIcon from '@mui/icons-material/Grade';
-import StarHalfIcon from '@mui/icons-material/StarHalf';
+import WorkIcon from "@mui/icons-material/Work";
+import ReviewsIcon from "@mui/icons-material/Reviews";
+import GradeIcon from "@mui/icons-material/Grade";
+import StarHalfIcon from "@mui/icons-material/StarHalf";
 import CustomTextField from "../customTextField";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -33,7 +33,10 @@ import PhoneInput from "../phoneInput";
 import { Toast } from "../ToastMessage";
 import IconLabelButtons from "../CustomButton/Button";
 import CustomDatePicker from "../customDatePicker";
-import FileUploader from "../customDragandDop";
+// import FileUploader from "../customDragandDop";
+// import InputField from "../TextField";
+import Dropzone from "../UploadDropZone";
+import axios from "axios";
 // import { blue } from "@mui/material/colors";
 
 const DoctorDetailsModal = ({
@@ -69,31 +72,68 @@ const DoctorDetailsModal = ({
   const employeeType = employee?.employeeType;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-  const uploadFile = async (evt: any) => {
+  // const uploadFile = async (evt: any) => {
+  //   try {
+  //     const allowedFormats = ["jpeg", "jpg", "png", "svg", "pdf", "webp"];
+  //     const file = evt.target.files[0];
+  //     if (!file) {
+  //       return;
+  //     }
+  //     const fileFormat = file.name.split(".").pop().toLowerCase();
+  //     if (!allowedFormats.includes(fileFormat)) {
+  //       Toast(
+  //         "error",
+  //         "Invalid file format. Please upload only JPEG, JPG, PNG, SVG, PDF, or WEBP files."
+  //       );
+  //       return;
+  //     }
+  //     const newFormData = new FormData();
+  //     newFormData.append("file", evt.target.files[0]);
+  //     newFormData.append("hostname", "localhost");
+  //     setSelectedFile(newFormData);
+  //   } catch (error) {
+  //     console.error("Error uploading the file:", error);
+  //   }
+  // };
+
+  const handleSignup = async (data: any) => {
+    console.log(data, "Booking appointment data");
+    console.log(JSON.stringify(data));
     try {
-      const allowedFormats = ["jpeg", "jpg", "png", "svg", "pdf", "webp"];
-      const file = evt.target.files[0];
-      if (!file) {
-        return;
+      const formData = new FormData();
+  
+      if (data.images && data.images.length > 0) {
+        data.images.forEach((image: string | Blob) => {
+          formData.append("images", image);
+        });
       }
-      const fileFormat = file.name.split(".").pop().toLowerCase();
-      if (!allowedFormats.includes(fileFormat)) {
-        Toast(
-          "error",
-          "Invalid file format. Please upload only JPEG, JPG, PNG, SVG, PDF, or WEBP files."
-        );
-        return;
+  
+      formData.append("fullName", data.fullName);
+      formData.append("email", data.email);
+      formData.append("prefferDate", data.prefferDate);
+      formData.append("nationality", data.nationality);
+      formData.append("timezone", data.timezone);
+      formData.append("cancertype", data.cancertype);
+      formData.append("phone", data.phone);
+      formData.append("description", data.description);
+  
+      const response = await axios.post("/api/bookingConsultation", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      if (response.status === 201) {
+        Toast("success", "Congratulations! You have booked your consultation.");
+        reset();
+      } else {
+        Toast("error", "Booking consultation failed!");
       }
-      const newFormData = new FormData();
-      newFormData.append("file", evt.target.files[0]);
-      newFormData.append("hostname", "localhost");
-      setSelectedFile(newFormData);
     } catch (error) {
-      console.error("Error uploading the file:", error);
+      console.error("Error during signup:", error);
+      Toast("error", "An error occurred during signup!");
     }
   };
-
-  const handleSignup = async(data: any) => {}
   return (
     <>
       <FullScreenDialog
@@ -176,8 +216,7 @@ const DoctorDetailsModal = ({
                   lg={12}
                   xl={12}
                   justifyContent={"center"}
-                className={styles.imageContainer}
-
+                  className={styles.imageContainer}
                 >
                   <img src={doctorimage} className={styles.imageDoctor} />
                 </Grid>
@@ -239,19 +278,19 @@ const DoctorDetailsModal = ({
                       surgeries.
                     </Typography>
                   </Grid>
-                  
                 </Grid>
-                <Grid container
-                    item
-                    xs={12}
-                    md={12}
-                    sm={12}
-                    lg={12}
-                    xl={12}
-                    justifyContent={"center"}
-                    className={styles.secondContainer}
-                    >
                 <Grid
+                  container
+                  item
+                  xs={12}
+                  md={12}
+                  sm={12}
+                  lg={12}
+                  xl={12}
+                  justifyContent={"center"}
+                  className={styles.secondContainer}
+                >
+                  <Grid
                     container
                     item
                     xs={6}
@@ -261,24 +300,40 @@ const DoctorDetailsModal = ({
                     xl={6}
                     justifyContent={"center"}
                   >
-                    <Grid container item justifyContent={"center"} alignItems={"start"} className={styles.consultationDone}
-                    xs={4}
-                    md={4}
-                    sm={4}
-                    lg={4}
-                    xl={4}>
+                    <Grid
+                      container
+                      item
+                      justifyContent={"center"}
+                      alignItems={"start"}
+                      className={styles.consultationDone}
+                      xs={4}
+                      md={4}
+                      sm={4}
+                      lg={4}
+                      xl={4}
+                    >
                       <CheckCircleIcon
-                        sx={{ fontSize: "58px", margin: "5px, 9px, 5px, 12px", color:"#10a0bd" }}
+                        sx={{
+                          fontSize: "58px",
+                          margin: "5px, 9px, 5px, 12px",
+                          color: "#10a0bd",
+                        }}
                       />
-                      </Grid>
+                    </Grid>
 
-                      <Grid container item justifyContent={"left"} alignItems={"start"} pt={1}
+                    <Grid
+                      container
+                      item
+                      justifyContent={"left"}
+                      alignItems={"start"}
+                      pt={1}
                       xs={7}
                       md={7}
                       sm={7}
                       lg={7}
                       xl={7}
-                      className={styles.consultationText}>
+                      className={styles.consultationText}
+                    >
                       120 Consultaion done
                     </Grid>
                   </Grid>
@@ -292,28 +347,42 @@ const DoctorDetailsModal = ({
                     xl={6}
                     justifyContent={"center"}
                   >
-                    <Grid container item justifyContent={"center"} alignItems={"start"} className={styles.consultationDone}
-                    xs={3}
-                    md={3}
-                    sm={3}
-                    lg={3}
-                    xl={3}
+                    <Grid
+                      container
+                      item
+                      justifyContent={"center"}
+                      alignItems={"start"}
+                      className={styles.consultationDone}
+                      xs={3}
+                      md={3}
+                      sm={3}
+                      lg={3}
+                      xl={3}
                     >
-
-                    {/* <Typography className={styles.consultationCharges}> */}
+                      {/* <Typography className={styles.consultationCharges}> */}
                       <MonetizationOnIcon
-                        sx={{ fontSize: "58px", margin: "5px, 9px, 5px, 12px", color:"#10a0bd" }}
-                        />
-                        </Grid>
-                        <Grid container item justifyContent={"left"} alignItems={"start"} pt={1}
+                        sx={{
+                          fontSize: "58px",
+                          margin: "5px, 9px, 5px, 12px",
+                          color: "#10a0bd",
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      justifyContent={"left"}
+                      alignItems={"start"}
+                      pt={1}
                       xs={9}
                       md={9}
                       sm={9}
                       lg={9}
                       xl={9}
-                      className={styles.consultationText}>
+                      className={styles.consultationText}
+                    >
                       13 Per Hour
-                      </Grid>
+                    </Grid>
                   </Grid>
                   <Grid
                     container
@@ -324,20 +393,33 @@ const DoctorDetailsModal = ({
                     lg={6}
                     xl={6}
                     justifyContent={"center"}
-
                   >
-                    <Grid container item justifyContent={"center"} alignItems={"start"} className={styles.consultationDone}
-                    xs={4}
-                    md={4}
-                    sm={4}
-                    lg={4}
-                    xl={4}>
-
+                    <Grid
+                      container
+                      item
+                      justifyContent={"center"}
+                      alignItems={"start"}
+                      className={styles.consultationDone}
+                      xs={4}
+                      md={4}
+                      sm={4}
+                      lg={4}
+                      xl={4}
+                    >
                       <ReviewsIcon
-                        sx={{ fontSize: "58px", margin: "5px, 9px, 5px, 12px", color:"#10a0bd" }}
-                        />
-                        </Grid>
-                      <Grid container item justifyContent={"left"} alignItems={"start"} pt={1}
+                        sx={{
+                          fontSize: "58px",
+                          margin: "5px, 9px, 5px, 12px",
+                          color: "#10a0bd",
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      justifyContent={"left"}
+                      alignItems={"start"}
+                      pt={1}
                       xs={7}
                       md={7}
                       sm={7}
@@ -345,12 +427,12 @@ const DoctorDetailsModal = ({
                       xl={7}
                       className={styles.consultationText}
                     >
-                      <GradeIcon/>
-                      <GradeIcon/>
-                      <GradeIcon/>
-                      <GradeIcon/>
-                      <StarHalfIcon/>
-                      </Grid>
+                      <GradeIcon />
+                      <GradeIcon />
+                      <GradeIcon />
+                      <GradeIcon />
+                      <StarHalfIcon />
+                    </Grid>
                   </Grid>
                   <Grid
                     container
@@ -362,26 +444,41 @@ const DoctorDetailsModal = ({
                     xl={6}
                     justifyContent={"center"}
                   >
-                    <Grid container item justifyContent={"start"} alignItems={"start"} className={styles.consultationDone}
-                    xs={3}
-                    md={3}
-                    sm={3}
-                    lg={3}
-                    xl={3}
+                    <Grid
+                      container
+                      item
+                      justifyContent={"start"}
+                      alignItems={"start"}
+                      className={styles.consultationDone}
+                      xs={3}
+                      md={3}
+                      sm={3}
+                      lg={3}
+                      xl={3}
                     >
                       <WorkIcon
-                        sx={{ fontSize: "58px", margin: "5px, 9px, 5px, 12px", color:"#10a0bd" }}
-                        />
-                        </Grid>
-                      <Grid container item justifyContent={"left"} alignItems={"start"} pt={1}
+                        sx={{
+                          fontSize: "58px",
+                          margin: "5px, 9px, 5px, 12px",
+                          color: "#10a0bd",
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      justifyContent={"left"}
+                      alignItems={"start"}
+                      pt={1}
                       xs={9}
                       md={9}
                       sm={9}
                       lg={9}
                       xl={9}
-                      className={styles.consultationText}>
+                      className={styles.consultationText}
+                    >
                       15 Years of Exp
-                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
@@ -401,332 +498,375 @@ const DoctorDetailsModal = ({
               >
                 <Card className={styles.bookingContainer}>
                   <CardContent>
-
-                  <form onSubmit={handleSubmit(handleSignup)}>
-                    <Typography className={styles.text}>
-                      Book Consultation Now
-                    </Typography>
-                    <Divider className={styles.formdivider} />
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                        Full Name
+                    <form onSubmit={handleSubmit(handleSignup)}>
+                      <Typography className={styles.text}>
+                        Book Consultation Now
                       </Typography>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.fullNameContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <CustomTextField
-                        error={Boolean(errors.fullName)}
-                        errorCondition={
-                          errors.fullName && (
-                            <Typography className={styles.errorMsg}>
-                              {errors.fullName.message}
-                            </Typography>
-                          )
-                        }
-                        control={control}
-                        name="fullName"
-                        fullWidth={true}
-                        className={styles.fieldContainer}
-                        placeholder="Enter your full name"
-                      />
-                    </Grid>
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                       Email
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.emailContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <CustomTextField
-                        error={Boolean(errors.email)}
-                        errorCondition={
-                          errors.email && (
-                            <Typography className={styles.errorMsg}>
-                              {errors.email.message}
-                            </Typography>
-                          )
-                        }
-                        control={control}
-                        name="email"
-                        fullWidth={true}
-                        className={styles.fieldContainer}
-                        placeholder="Email Address"
-                      />
-                    </Grid>
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                        Date & Time
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.nationalityContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <CustomDatePicker
-                        error={Boolean(errors.prefferDate)}
-                        errorCondition={
-                          errors.prefferDate && (
-                            <Typography className={styles.errorMsg}>
-                              {errors.prefferDate.message}
-                            </Typography>
-                          )
-                        }
-                        control={control}
-                        name="prefferDate"
-                        className={styles.datefieldContainer}
-                      />
-                    </Grid>
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                        Nationality
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.nationalityContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <CustomSelect
-                        error={Boolean(errors.nationality)}
-                        errorCondition={
-                          errors.nationality && (
-                            <Typography className={styles.errorMsg}>
-                              {errors.nationality.message}
-                            </Typography>
-                          )
-                        }
-                        control={control}
-                        name="nationality"
-                        selectData={perInfoData.nationality}
-                        placeHolder="Select nationality"
-                        selectFieldCss={styles.selectField}
-                        fullWidth={true}
-                        className={styles.customSelect}
-                      />
-                    </Grid>
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                        Time Zone
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.timezoneContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <CustomSelect
-                        error={Boolean(errors.timezone)}
-                        errorCondition={
-                          errors.timezone && (
-                            <Typography className={styles.errorMsg}>
-                              {errors.timezone.message}
-                            </Typography>
-                          )
-                        }
-                        control={control}
-                        name="timezone"
-                        selectData={perInfoData.timezone}
-                        placeHolder="Select your timezone"
-                        selectFieldCss={styles.selectField}
-                        fullWidth={true}
-                        className={styles.customSelect}
-                      />
-                    </Grid>
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                        Phone number
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.timezoneContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <PhoneInput
-                        name="phone"
-                        control={control}
-                        error={Boolean(errors?.phone)}
-                        containerClass={styles.containerPhn}
-                        inputClass={`${styles.inputPhn} ${
-                          Boolean(errors?.phone) ? styles.errorBorder : ""
-                        }`}
-                        placeholder="+91-8050656794"
-                        helperText={errors?.phone?.message}
-                      />
-                    </Grid>
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                        Cancer types
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.timezoneContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <CustomSelect
-                        error={Boolean(errors.cancertype)}
-                        errorCondition={
-                          errors.cancertype && (
-                            <Typography className={styles.errorMsg}>
-                              {errors.cancertype.message}
-                            </Typography>
-                          )
-                        }
-                        control={control}
-                        name="cancertype"
-                        selectData={perInfoData.cancertype}
-                        placeHolder="Select your cancer type"
-                        selectFieldCss={styles.selectField}
-                        fullWidth={true}
-                        className={styles.customSelect}
-                      />
-                    </Grid>
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                        Upload file(Doctor Prescription's etc...)
-                      </Typography>
-                    </Grid>
-                    
-                    <Grid
-                      container
-                      item
-                      className={styles.timezoneContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <FileUploader 
-                      name="files"
-                      acceptedFileTypes={['image/jpeg', 'image/png', 'application/pdf', 'image/svg+xml', 'image/webp']}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.timezoneContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <Typography className={styles.inputHeading}>
-                        Upload File (
-                        <span style={{ fontWeight: "normal" }}>
-                          Jpeg, Jpg, Png, SVG, Pdf, Webp
-                        </span>
-                        )
-                      </Typography>
-                    </Grid>
-                    <Grid className={styles.fullName}>
-                      <Typography className={styles.fullNameTypo}>
-                        Reason for consultation
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.timezoneContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                    >
-                      <Controller
-                        control={control}
-                        name="description"
-                        defaultValue=""
-                        rules={{
-                          required: true,
-                          maxLength: 60,
-                          pattern: /^[a-zA-Z ]*$/,
-                        }}
-                        render={({ field, fieldState: { error } }) => (
-                          <>
-                            <TextareaAutosize
-                              minRows={8}
-                              maxRows={10}
-                              {...field}
-                              className={styles.textArea}
-                            />
-
-                            {error && (
-                              <Typography
-                                color="error"
-                                className={styles.errorMsg}
-                                sx={{ fontSize: "12px" }}
-                              >
-                                Please enter a description (max 60 characters)
+                      <Divider className={styles.formdivider} />
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Full Name
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.fullNameContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <CustomTextField
+                          error={Boolean(errors.fullName)}
+                          errorCondition={
+                            errors.fullName && (
+                              <Typography className={styles.errorMsg}>
+                                {errors.fullName.message}
                               </Typography>
-                            )}
-                          </>
-                        )}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      className={styles.submitButtonContainer}
-                      xs={12}
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      xl={12}
-                      justifyContent={"center"}
-                    >
-                      <IconLabelButtons
-                        name={"Book Consultation"}
-                        type="submit"
-                        variant="contained"
-                        className={styles.buttons}
-                      />
-                    </Grid>
+                            )
+                          }
+                          control={control}
+                          name="fullName"
+                          fullWidth={true}
+                          className={styles.fieldContainer}
+                          placeholder="Enter your full name"
+                        />
+                      </Grid>
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Email
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.emailContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <CustomTextField
+                          error={Boolean(errors.email)}
+                          errorCondition={
+                            errors.email && (
+                              <Typography className={styles.errorMsg}>
+                                {errors.email.message}
+                              </Typography>
+                            )
+                          }
+                          control={control}
+                          name="email"
+                          fullWidth={true}
+                          className={styles.fieldContainer}
+                          placeholder="Email Address"
+                        />
+                      </Grid>
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Date & Time
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.nationalityContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <CustomDatePicker
+                          error={Boolean(errors.prefferDate)}
+                          errorCondition={
+                            errors.prefferDate && (
+                              <Typography className={styles.errorMsg}>
+                                {errors.prefferDate.message}
+                              </Typography>
+                            )
+                          }
+                          control={control}
+                          name="prefferDate"
+                          className={styles.datefieldContainer}
+                        />
+                      </Grid>
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Nationality
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.nationalityContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <CustomSelect
+                          error={Boolean(errors.nationality)}
+                          errorCondition={
+                            errors.nationality && (
+                              <Typography className={styles.errorMsg}>
+                                {errors.nationality.message}
+                              </Typography>
+                            )
+                          }
+                          control={control}
+                          name="nationality"
+                          selectData={perInfoData.nationality}
+                          placeHolder="Select nationality"
+                          selectFieldCss={styles.selectField}
+                          fullWidth={true}
+                          className={styles.customSelect}
+                        />
+                      </Grid>
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Time Zone
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.timezoneContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <CustomSelect
+                          error={Boolean(errors.timezone)}
+                          errorCondition={
+                            errors.timezone && (
+                              <Typography className={styles.errorMsg}>
+                                {errors.timezone.message}
+                              </Typography>
+                            )
+                          }
+                          control={control}
+                          name="timezone"
+                          selectData={perInfoData.timezone}
+                          placeHolder="Select your timezone"
+                          selectFieldCss={styles.selectField}
+                          fullWidth={true}
+                          className={styles.customSelect}
+                        />
+                      </Grid>
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Phone number
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.timezoneContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <PhoneInput
+                          name="phone"
+                          control={control}
+                          error={Boolean(errors?.phone)}
+                          containerClass={styles.containerPhn}
+                          inputClass={`${styles.inputPhn} ${
+                            Boolean(errors?.phone) ? styles.errorBorder : ""
+                          }`}
+                          placeholder="+91-8050656794"
+                          helperText={errors?.phone?.message}
+                        />
+                      </Grid>
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Cancer types
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.timezoneContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <CustomSelect
+                          error={Boolean(errors.cancertype)}
+                          errorCondition={
+                            errors.cancertype && (
+                              <Typography className={styles.errorMsg}>
+                                {errors.cancertype.message}
+                              </Typography>
+                            )
+                          }
+                          control={control}
+                          name="cancertype"
+                          selectData={perInfoData.cancertype}
+                          placeHolder="Select your cancer type"
+                          selectFieldCss={styles.selectField}
+                          fullWidth={true}
+                          className={styles.customSelect}
+                        />
+                      </Grid>
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Upload file(Doctor Prescription's etc...)
+                        </Typography>
+                      </Grid>
+
+                      <Grid
+                        container
+                        item
+                        className={styles.timezoneContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        {/* <FileUploader
+                          name="files"
+                          acceptedFileTypes={[
+                            "image/jpeg",
+                            "image/png",
+                            "application/pdf",
+                            "image/svg+xml",
+                            "image/webp",
+                          ]}
+                          maxFiles={10}
+                          placeholder="Upload file(s)"
+                        /> */}
+                        {/* <InputField
+                          type="file"
+                          size="medium"
+                          error={errors.documentName !== undefined}
+                          helperText={
+                            errors.documentName
+                              ? "Please upload a document"
+                              : ""
+                          }
+                          onChange={(
+                            event: any
+                          ) => uploadFile(event)}
+                          multiple 
+                        /> */}
+                        <Controller
+                          control={control}
+                          name="images"
+                          defaultValue=""
+                          render={({ field, fieldState: { error } }) => (
+                            <>
+                              <Dropzone
+                                {...field}
+                                //  onFileDrop={uploadFile}
+                              />
+                              {error && (
+                                <Typography
+                                  color="error"
+                                  className={styles.errorMsg}
+                                  sx={{ fontSize: "12px" }}
+                                >
+                                  Please select the images
+                                </Typography>
+                              )}
+                            </>
+                          )}
+                        />
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.timezoneContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <Typography className={styles.inputHeading}>
+                          Upload File (
+                          <span style={{ fontWeight: "normal" }}>
+                            Jpeg, Jpg, Png, SVG, Pdf, Webp
+                          </span>
+                          )
+                        </Typography>
+                      </Grid>
+                      <Grid className={styles.fullName}>
+                        <Typography className={styles.fullNameTypo}>
+                          Reason for consultation
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.timezoneContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <Controller
+                          control={control}
+                          name="description"
+                          defaultValue=""
+                          rules={{
+                            required: true,
+                            maxLength: 60,
+                            pattern: /^[a-zA-Z ]*$/,
+                          }}
+                          render={({ field, fieldState: { error } }) => (
+                            <>
+                              <TextareaAutosize
+                                minRows={8}
+                                maxRows={10}
+                                {...field}
+                                className={styles.textArea}
+                              />
+
+                              {error && (
+                                <Typography
+                                  color="error"
+                                  className={styles.errorMsg}
+                                  sx={{ fontSize: "12px" }}
+                                >
+                                  Please enter a description (max 60 characters)
+                                </Typography>
+                              )}
+                            </>
+                          )}
+                        />
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        className={styles.submitButtonContainer}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                        justifyContent={"center"}
+                      >
+                        <IconLabelButtons
+                          name={"Book Consultation"}
+                          type="submit"
+                          variant="contained"
+                          className={styles.buttons}
+                        />
+                      </Grid>
                     </form>
                   </CardContent>
                 </Card>
